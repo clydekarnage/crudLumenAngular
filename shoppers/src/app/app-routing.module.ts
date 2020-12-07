@@ -1,5 +1,8 @@
+import { NavigateAwayGuardService } from './services/navigate-away-guard.service';
+import { AuthGuardService } from './services/auth-guard.service';
+import { CategoriesResolverService } from './services/categories-resolver.service';
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+// import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
@@ -20,22 +23,30 @@ const routes: Routes = [{
 {
   path: 'categories',
   component: CategoriesComponent,
+  resolve: { categories: CategoriesResolverService },
+  canActivate: [AuthGuardService]
 },
 {
   path: 'add-category',
   component: AddCategoryComponent,
+  canDeactivate: [NavigateAwayGuardService],
+  canActivate: [AuthGuardService]
 },
 {
   path: 'add-category/:id',
   component: AddCategoryComponent,
+  canDeactivate: [NavigateAwayGuardService],
+  canActivate: [AuthGuardService]
 },
 {
   path: 'categories/:id',
   component: ItemsComponent,
+  canActivate: [AuthGuardService],
 },
 {
   path: 'categories/:id/add-item',
   component: AddItemComponent,
+  canActivate: [AuthGuardService]
 },
 {
   path: '',
